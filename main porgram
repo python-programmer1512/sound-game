@@ -1,0 +1,55 @@
+import sys
+import music
+import random
+import stage
+import pygame
+import time
+import soundgame
+from tkinter import *
+from tkinter import messagebox
+from pygame.locals import QUIT,KEYDOWN,K_LEFT,K_RIGHT,K_UP,K_DOWN,Rect,MOUSEBUTTONDOWN,K_SPACE
+SURFACE = pygame.display.set_mode((600, 600))
+FPSCLOCK = pygame.time.Clock()
+start=pygame.image.load("start button.jpg")
+starton=pygame.image.load("start button1.jpg")
+sample=pygame.image.load("sample.jpg")
+sampleon=pygame.image.load("sample1.jpg")
+def playsummer():
+    soundgame.play("summer","random")
+witch=1
+key=0
+while 1:
+    #print(witch)
+    SURFACE.fill((25,25,25))
+    spaceon=0
+    for event in pygame.event.get():
+        if event.type==QUIT:pygame.quit();sys.exit()
+        elif event.type==KEYDOWN:key=event.key
+        if key==K_UP:witch-=1
+        if key==K_DOWN:witch+=1
+        if key==K_SPACE:spaceon=1
+    if witch>2:witch=2
+    if witch<1:witch=1
+    if witch==1:
+        SURFACE.blit(starton,(180,300))#x,y
+        SURFACE.blit(sample,(180,400))#x,y
+    elif witch==2:
+        SURFACE.blit(start,(180,300))#x,y
+        SURFACE.blit(sampleon,(180,400))#x,y
+    else:
+        SURFACE.blit(start,(180,300))#x,y
+        SURFACE.blit(sample,(180,400))#x,y
+    if spaceon==1:
+        if witch==2:print("test button")
+        if witch==1:stage.stage()
+    pygame.display.update()
+   # FPSCLOCK.tick(15)
+#root=Tk()
+#myCanvas=Canvas(width=300,height=300)
+#myCanvas.pack()
+#labelWidget=Label(myCanvas,text="witch sound",fg="blue")
+#myCanvas.create_window(100,100,window=labelWidget)
+#button1=Button(myCanvas,text="play summer",command=playsummer)
+#button2=Button(myCanvas,text="ended",command=ended)
+#myCanvas.create_window(100,140,window=button1)
+#myCanvas.create_window(100,200,window=button2)
