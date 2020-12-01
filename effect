@@ -1,0 +1,47 @@
+import sys
+import random
+import pygame
+import effect
+import time
+import music
+from tkinter import *
+from tkinter import messagebox
+from pygame.locals import QUIT, KEYDOWN,K_LEFT, K_RIGHT, K_UP, K_DOWN, Rect
+pygame.init()
+FPSCLOCK = pygame.time.Clock()
+SURFACE = pygame.display.set_mode((600, 600))
+def f1(effectbar,effectwave,ix,qt,i):
+    if effectwave[i][qt][0]<=0:effectwave[i][qt][1]=1;effectwave[i][qt][2]=0
+    if effectwave[i][qt][0]>=10:effectwave[i][qt][1]=0;effectwave[i][qt][2]=1
+    yt=random.randint(-3,3)
+    yt/=10
+    if effectwave[i][qt][1]==1:
+        ix[0]+=yt
+        effectwave[i][qt][0]+=yt
+    elif effectwave[i][qt][2]==1:
+        ix[0]-=yt
+        effectwave[i][qt][0]-=yt
+    ix[0]+=yt
+    ix[1]-=0.4
+    ix[2]+=1
+def f2(effectbar,effectwave,ix):
+    if ix[3]==0:ix[0]-=0.2;ix[1]-=0.1
+    elif ix[3]==1:ix[0]-=0.1;ix[1]-=0.2
+    elif ix[3]==2:ix[1]-=0.3
+    elif ix[3]==3:ix[0]+=0.1;ix[1]-=0.2
+    elif ix[3]==4:ix[0]+=0.2;ix[1]-=0.1
+    ix[2]+=1
+def f3(effectbar,effectwave,ix):
+    for i in range(2):
+        effectbar[0].append([ix[0],ix[1],900,i]);effectwave[0].append([0,1,0])
+    ix[2]+=1
+def effect(effectbar,effectwave):
+    for i in range(4):
+        qt=-1
+        for ix in effectbar[i]:
+            qt+=1
+            if ix[2]<=800:
+                #f1(effectbar,effectwave,ix,qt,i)
+                f2(effectbar,effectwave,ix)
+                #f3(effectbar,effectwave,ix)
+            else:effectbar[i].pop(qt);effectwave[i].pop(qt)
