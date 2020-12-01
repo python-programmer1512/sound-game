@@ -1,0 +1,41 @@
+import sys
+import random
+import pygame
+import effect
+import time
+import random
+import music
+from tkinter import *
+from tkinter import messagebox
+from pygame.locals import QUIT, KEYDOWN,K_LEFT, K_RIGHT, K_UP, K_DOWN, Rect
+pygame.init()
+FPSCLOCK = pygame.time.Clock()
+SURFACE = pygame.display.set_mode((600, 600))
+key=0
+def f(x,y,effectbar,effectwave):
+    for i in range(5):effectbar[0].append([x,y,0,i]);effectwave[0].append([0,1,0])
+def arrowkey(q,score,effectbar,effectwave,scorecombo,scorecombostack):
+    global key
+    for event in pygame.event.get():
+        if event.type==QUIT:pygame.quit();sys.exit()
+        elif event.type==KEYDOWN:key=event.key
+        if key==K_LEFT:
+            if q[0]!=[]:
+                if 510<=q[0][0][1]<=540:scorecombostack+=1;score[0]+=(scorecombo+1);f(q[0][0][0],q[0][0][1],effectbar,effectwave);q[0].pop(0)
+                elif 540<=q[0][0][1]<=600:scorecombostack+=1;score[1]+=(scorecombo+1);f(q[0][0][0],q[0][0][1],effectbar,effectwave);q[0].pop(0)
+                else:score[2]+=1;scorecombo=0
+        if key==K_RIGHT:
+            if q[1]!=[]:
+                if 510<=q[1][0][1]==540:scorecombostack+=1;score[0]+=(scorecombo+1);f(q[1][0][0],q[1][0][1],effectbar,effectwave);q[1].pop(0)
+                elif 540<=q[1][0][1]<=600:scorecombostack+=1;score[1]+=(scorecombo+1);f(q[1][0][0],q[1][0][1],effectbar,effectwave);q[1].pop(0)
+                else:score[2]+=1;scorecombo=0
+        if key==K_UP:
+            if q[2]!=[]:
+                if 510<=q[2][0][1]==540:scorecombostack+=1;score[0]+=(scorecombo+1);f(q[2][0][0],q[2][0][1],effectbar,effectwave);q[2].pop(0)
+                elif 540<=q[2][0][1]<=600:scorecombostack+=1;score[1]+=(scorecombo+1);f(q[2][0][0],q[2][0][1],effectbar,effectwave);q[2].pop(0)
+                else:score[2]+=1;scorecombo=0
+        if key==K_DOWN:
+            if q[3]!=[]:
+                if 510<=q[3][0][1]==540:scorecombostack+=1;score[0]+=(scorecombo+1);f(q[3][0][0],q[3][0][1],effectbar,effectwave);q[3].pop(0)
+                elif 540<=q[3][0][1]<=600:scorecombostack+=1;score[1]+=(scorecombo+1);f(q[3][0][0],q[3][0][1],effectbar,effectwave);q[3].pop(0)
+                else:score[2]+=1;scorecombo=0
