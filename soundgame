@@ -1,0 +1,70 @@
+import sys
+import random
+import pygame
+import time
+import mode
+import effect
+import music
+import contrl
+import finsh
+from tkinter import *
+from tkinter import messagebox
+from pygame.locals import QUIT, KEYDOWN,K_LEFT, K_RIGHT, K_UP, K_DOWN, Rect
+def play(soundmusic,ver):
+    effectbar=[[],[],[],[]]
+    effectwave=[[],[],[],[]]
+    pygame.init()
+    scorecombo=0
+    scorecombostack=0
+    FPSCLOCK = pygame.time.Clock()
+    SURFACE = pygame.display.set_mode((600, 600))
+    SURFACE.fill((25,25,25))
+    linecolor=[[255,0,0],[255,94,0],[255,187,0],[255,228,0],[171,242,0],[29,219,22],
+                     [0,216,255],[0,84,255],[1,0,255],[95,0,255],[95, 0, 255],[1, 0, 255], [0, 84, 255],
+                     [0, 216, 255], [29, 219, 22], [171, 242, 0], [255, 228, 0],
+                     [255, 187, 0], [255, 94, 0], [255, 0, 0]]
+    q=[[],[],[],[]]
+    r1=0
+    up=pygame.image.load("change_up.jpg")
+    down=pygame.image.load("change_under.jpg")
+    left=pygame.image.load("change_left.jpg")
+    right=pygame.image.load("change_right.jpg")
+    arrow=[left,right,up,down]
+    score=[0,0,0]#prefect,good,miss
+    start=time.time()
+    musicstart=0
+    # 내려가는데 3~4초
+    while 1:
+        if time.time()-start>=3.5 and musicstart==0:music.music(soundmusic);musicstart=1
+        if time.time()-start>=149.5:#149.5
+            pygame.mixer.music.stop()
+            finsh.finsh(score[0]*100+score[1]*50-score[2]*20,score,scorecombostack)
+        r1+=1
+        mode.mode(ver,q,r1)
+        contrl.arrowkey(q,score,effectbar,effectwave,scorecombo,scorecombostack)
+        #print(q)
+        SURFACE.fill((25,25,25))
+        for i in range(4):
+            qt=-1
+            for ix in q[i]:
+                qt+=1
+                ix[1]+=0.3
+                if ix[1]>600:
+                    score[2]+=1
+                    scorecombo=0
+                    q[i].pop(qt)
+        effect.effect(effectbar,effectwave)
+        #if len(effectwave[0])!=0:print("#",effectwave)
+        for i in range(4):
+            for ix in q[i]:
+                SURFACE.blit(arrow[ix[0]//30-8],(ix[0],ix[1]))
+        for i in range(4):
+            for ix1 in effectbar[i]:
+                pygame.draw.ellipse(SURFACE,(255,255,255),Rect(ix1[0],ix1[1],10,10))
+                #SURFACE.blit(arrow[ix[0]//30-8],(250,50),Rect(50,50,100,100))
+                #pygame.draw.ellipse(SURFACE,(255,212,0),Rect(ix[0],ix[1]*30,30,30))
+        for ix in range(8,13):pygame.draw.line(SURFACE,(linecolor[ix-8][0],linecolor[ix-8][1],linecolor[ix-8][2]),(ix*30, 0),(ix*30, 600))
+        pygame.draw.line(SURFACE,(linecolor[10][0],linecolor[10][1],linecolor[10][2]),(0,510),(600, 510)) 
+        pygame.draw.line(SURFACE,(linecolor[11][0],linecolor[11][1],linecolor[11][2]),(0,540),(600, 540)) 
+        pygame.display.update()
+#play("summer","summer")
