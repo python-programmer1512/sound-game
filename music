@@ -1,0 +1,10 @@
+import pygame
+import sys
+pygame.init()
+def music(musicname):
+    if musicname=="summer":
+        pygame.mixer.music.load('summer.mp3')
+        pygame.mixer.music.play(-1)
+    elif musicname=="Artcore":
+        pygame.mixer.music.load('Artcore.mp3')
+        pygame.mixer.music.play(-1)
