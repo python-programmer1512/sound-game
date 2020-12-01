@@ -1,0 +1,32 @@
+import sys
+import music
+import random
+import pygame
+import time
+from math import *
+import soundgame
+from tkinter import *
+from tkinter import messagebox
+from pygame.locals import QUIT,KEYDOWN,K_LEFT,K_RIGHT,K_UP,K_DOWN,Rect,MOUSEBUTTONDOWN,K_SPACE
+SURFACE = pygame.display.set_mode((600, 600))
+FPSCLOCK = pygame.time.Clock()
+SIZE = width,height = 600,600
+pygame.init()
+SURFACE.fill([0,0,0])
+def finsh(score,score1,scorecombostack):
+    for i in range(100,-1,-1):
+        SURFACE.fill([0,0,0])
+        font1=pygame.font.SysFont('notosansmonocjkkrregular',50)
+        q="Your Score is "+str(score+i)
+        img1=font1.render(q,True,(255,255,255))
+        SURFACE.blit(img1, (80,270))
+        pygame.display.update()
+    #pygame.quit()
+    q="prefect :"+str(score1[0])+" good :"+str(score1[1])+" miss :"+str(score1[2])
+    img=font1.render(q,True,(255,255,255))
+    SURFACE.blit(img, (30,300))
+    q2="combo :"+str(scorecombostack)
+    img2=font1.render(q2,True,(255,255,255))
+    SURFACE.blit(img2, (80,350))
+    pygame.display.update()
+    sys.exit()
